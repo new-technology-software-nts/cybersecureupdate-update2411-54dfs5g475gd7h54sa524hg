@@ -1,0 +1,1639 @@
+﻿<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="theme-color" content="#f2f5fa" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0b0e14" media="(prefers-color-scheme: dark)">
+  <title>New Technology Software - CS Updater</title>
+  <style>
+    :root {
+      --bg-base: #eef2f8;
+      --bg-orb-1: rgba(0, 122, 255, 0.22);
+      --bg-orb-2: rgba(52, 199, 89, 0.16);
+      --bg-orb-3: rgba(175, 82, 222, 0.16);
+
+
+      --glass-bg: rgba(255, 255, 255, 0.68);
+      --glass-bg-strong: rgba(255, 255, 255, 0.84);
+      --glass-border: rgba(255, 255, 255, 0.78);
+      --glass-border-subtle: rgba(15, 23, 42, 0.07);
+      --glass-shadow: 0 12px 36px rgba(15, 23, 42, 0.07), 0 2px 8px rgba(15, 23, 42, 0.04);
+      --glass-inset: inset 0 1px 1px rgba(255, 255, 255, 0.9);
+
+
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-tertiary: #64748b;
+
+
+      --accent-blue: #007aff;
+      --accent-blue-dark: #0062d6;
+      --accent-blue-soft: rgba(0, 122, 255, 0.11);
+      --accent-blue-border: rgba(0, 122, 255, 0.22);
+
+
+      --accent-green: #34c759;
+      --accent-green-bright: #30d158;
+      --accent-green-glow: rgba(52, 199, 89, 0.35);
+
+
+      --accent-amber: #d97706;
+      --accent-amber-soft: rgba(245, 158, 11, 0.12);
+      --accent-amber-border: rgba(245, 158, 11, 0.24);
+
+
+      --track-bg: rgba(15, 23, 42, 0.1);
+      --divider: rgba(15, 23, 42, 0.08);
+      --dock-fade: rgba(238, 242, 248, 0.78);
+
+
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --radius-pill: 999px;
+
+
+      --spring: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-base: #090c12;
+        --bg-orb-1: rgba(10, 132, 255, 0.26);
+        --bg-orb-2: rgba(48, 209, 88, 0.18);
+        --bg-orb-3: rgba(191, 90, 242, 0.2);
+
+
+        --glass-bg: rgba(28, 32, 42, 0.62);
+        --glass-bg-strong: rgba(34, 39, 51, 0.8);
+        --glass-border: rgba(255, 255, 255, 0.13);
+        --glass-border-subtle: rgba(255, 255, 255, 0.08);
+        --glass-shadow: 0 18px 44px rgba(0, 0, 0, 0.48), 0 2px 10px rgba(0, 0, 0, 0.28);
+        --glass-inset: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+
+
+        --text-primary: #f8fafc;
+        --text-secondary: #cbd5e1;
+        --text-tertiary: #94a3b8;
+
+
+        --accent-blue: #0a84ff;
+        --accent-blue-dark: #0070e0;
+        --accent-blue-soft: rgba(10, 132, 255, 0.16);
+        --accent-blue-border: rgba(10, 132, 255, 0.32);
+
+
+        --accent-amber: #fbbf24;
+        --accent-amber-soft: rgba(251, 191, 36, 0.13);
+        --accent-amber-border: rgba(251, 191, 36, 0.28);
+
+
+        --track-bg: rgba(255, 255, 255, 0.13);
+        --divider: rgba(255, 255, 255, 0.09);
+        --dock-fade: rgba(9, 12, 18, 0.8);
+      }
+    }
+
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+
+    html, body {
+      min-height: 100dvh;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      line-height: 1.48;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+
+    /* Ambient iOS 27 Liquid Background */
+    .ambient-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(72px);
+      will-change: transform;
+      animation: orbFloat 18s ease-in-out infinite alternate;
+    }
+
+
+    .orb-1 {
+      width: 340px;
+      height: 340px;
+      background: var(--bg-orb-1);
+      top: -90px;
+      left: -80px;
+    }
+
+
+    .orb-2 {
+      width: 320px;
+      height: 320px;
+      background: var(--bg-orb-2);
+      bottom: -80px;
+      right: -90px;
+      animation-delay: -6s;
+      animation-duration: 22s;
+    }
+
+
+    .orb-3 {
+      width: 260px;
+      height: 260px;
+      background: var(--bg-orb-3);
+      top: 42%;
+      left: 55%;
+      animation-delay: -11s;
+      animation-duration: 25s;
+    }
+
+
+    @keyframes orbFloat {
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      50% { transform: translate3d(26px, -22px, 0) scale(1.08); }
+      100% { transform: translate3d(-18px, 28px, 0) scale(0.96); }
+    }
+
+
+    /* App Shell */
+    .app-shell {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 480px;
+      min-height: 100dvh;
+      margin: 0 auto;
+      padding: calc(18px + env(safe-area-inset-top)) 16px calc(24px + env(safe-area-inset-bottom));
+      display: flex;
+      flex-direction: column;
+    }
+
+
+    /* Screen Transitions */
+    .screen {
+      display: none;
+      flex-direction: column;
+      flex: 1;
+      opacity: 0;
+      transform: translateY(14px) scale(0.985);
+      transition: opacity 0.45s var(--spring), transform 0.55s var(--spring);
+    }
+
+
+    .screen.active {
+      display: flex;
+    }
+
+
+    .screen.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+
+    /* Liquid Glass Card */
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(28px) saturate(185%);
+      -webkit-backdrop-filter: blur(28px) saturate(185%);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--glass-shadow), var(--glass-inset);
+    }
+
+
+    /* ==================== SCREEN 1: INTRO ==================== */
+    #screen-intro {
+      padding-bottom: calc(96px + env(safe-area-inset-bottom));
+      gap: 14px;
+    }
+
+
+    .hero-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 12px 6px 6px;
+    }
+
+
+    .app-squircle {
+      width: 76px;
+      height: 76px;
+      border-radius: 22px;
+      background: linear-gradient(145deg, #1b8cff 0%, #0058d6 58%, #003a99 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow:
+        0 14px 28px rgba(0, 122, 255, 0.34),
+        inset 0 1.5px 2px rgba(255, 255, 255, 0.55),
+        inset 0 -2px 6px rgba(0, 20, 70, 0.35);
+      margin-bottom: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+
+    .app-squircle::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.32) 0%, rgba(255, 255, 255, 0) 48%);
+      pointer-events: none;
+    }
+
+
+    .phase-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: var(--radius-pill);
+      background: var(--glass-bg-strong);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05), var(--glass-inset);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--accent-blue);
+      margin-bottom: 10px;
+    }
+
+
+    .phase-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-blue);
+      box-shadow: 0 0 8px var(--accent-blue);
+    }
+
+
+    .main-title {
+      font-size: clamp(22px, 5.8vw, 26px);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1.2;
+      color: var(--text-primary);
+    }
+
+
+    .main-subtitle {
+      margin-top: 6px;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+
+    /* Recommendation Banner */
+    .recommend-banner {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: var(--radius-lg);
+      background: var(--accent-blue-soft);
+      border: 1px solid var(--accent-blue-border);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+
+    .banner-icon {
+      flex-shrink: 0;
+      width: 34px;
+      height: 34px;
+      border-radius: 11px;
+      background: var(--accent-blue);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+    }
+
+
+    .recommend-banner p {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-primary);
+      line-height: 1.42;
+    }
+
+
+    /* Metadata Inset Group */
+    .meta-card {
+      padding: 4px 16px;
+    }
+
+
+    .meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--divider);
+      font-size: 14px;
+    }
+
+
+    .meta-row:last-child {
+      border-bottom: none;
+    }
+
+
+    .meta-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-secondary);
+      min-width: 0;
+    }
+
+
+    .meta-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: var(--glass-border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-blue);
+      flex-shrink: 0;
+    }
+
+
+    .meta-value {
+      font-weight: 600;
+      color: var(--text-primary);
+      text-align: right;
+      white-space: nowrap;
+    }
+
+
+    /* Section Card: Popis */
+    .details-card {
+      padding: 16px;
+    }
+
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-tertiary);
+      margin-bottom: 12px;
+    }
+
+
+    .feature-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+
+
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      font-size: 14px;
+      color: var(--text-primary);
+      line-height: 1.44;
+    }
+
+
+    .feature-badge {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      margin-top: 1px;
+      border-radius: 50%;
+      background: rgba(52, 199, 89, 0.15);
+      color: var(--accent-green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+
+    /* Notice / Warning Card */
+    .warning-card {
+      padding: 15px 16px;
+      border-radius: var(--radius-lg);
+      background: var(--accent-amber-soft);
+      border: 1px solid var(--accent-amber-border);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+
+
+    .warning-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13.5px;
+      color: var(--text-primary);
+      line-height: 1.44;
+    }
+
+
+    .warning-icon {
+      flex-shrink: 0;
+      color: var(--accent-amber);
+      margin-top: 2px;
+    }
+
+
+    /* Bottom Sticky Action Dock (Screen 1) */
+    .action-dock {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 15;
+      padding: 14px 16px calc(16px + env(safe-area-inset-bottom));
+      background: linear-gradient(to top, var(--dock-fade) 68%, transparent 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      display: flex;
+      justify-content: center;
+      transition: opacity 0.35s ease, transform 0.4s var(--spring);
+    }
+
+
+    .action-dock.hidden {
+      opacity: 0;
+      transform: translateY(24px);
+      pointer-events: none;
+    }
+
+
+    .btn-primary {
+      width: 100%;
+      max-width: 448px;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 16px 24px;
+      border-radius: var(--radius-pill);
+      background: linear-gradient(180deg, #1c8bff 0%, var(--accent-blue) 52%, var(--accent-blue-dark) 100%);
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 16.5px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      box-shadow:
+        0 10px 24px rgba(0, 122, 255, 0.36),
+        inset 0 1px 1px rgba(255, 255, 255, 0.45);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: transform 0.2s var(--spring), box-shadow 0.2s ease, filter 0.2s ease;
+    }
+
+
+    .btn-primary:hover {
+      filter: brightness(1.04);
+      box-shadow: 0 14px 30px rgba(0, 122, 255, 0.44), inset 0 1px 1px rgba(255, 255, 255, 0.5);
+    }
+
+
+    .btn-primary:active {
+      transform: scale(0.968);
+      box-shadow: 0 5px 14px rgba(0, 122, 255, 0.3);
+    }
+
+
+    /* ==================== SCREEN 2: UPDATING ==================== */
+    #screen-updating {
+      justify-content: space-between;
+      padding-bottom: calc(92px + env(safe-area-inset-bottom));
+    }
+
+
+    .mini-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 8px 14px;
+      margin: 0 auto;
+      border-radius: var(--radius-pill);
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+    }
+
+
+    .mini-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      background: linear-gradient(145deg, #1b8cff, #004ecc);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+
+    .update-center {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 24px 8px;
+    }
+
+
+    /* Dynamic iOS 27 Glass Spinner */
+    .spinner-stage {
+      position: relative;
+      width: 112px;
+      height: 112px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+
+    .spinner-halo {
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      background: conic-gradient(
+        from 0deg,
+        transparent 0deg,
+        rgba(0, 122, 255, 0.55) 110deg,
+        rgba(52, 199, 89, 0.55) 210deg,
+        transparent 310deg
+      );
+      filter: blur(12px);
+      opacity: 0.72;
+      animation: spinLinear 2.4s linear infinite;
+    }
+
+
+    .spinner-ring-track {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: var(--glass-bg-strong);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow), var(--glass-inset);
+      backdrop-filter: blur(26px);
+      -webkit-backdrop-filter: blur(26px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+
+    .spinner-arc {
+      position: absolute;
+      inset: -2px;
+      border-radius: 50%;
+      padding: 3px;
+      background: conic-gradient(
+        from 0deg,
+        rgba(0, 122, 255, 0) 0%,
+        rgba(0, 122, 255, 0.12) 45%,
+        var(--accent-blue) 78%,
+        var(--accent-green) 100%
+      );
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      animation: spinLinear 1.25s linear infinite;
+    }
+
+
+    /* Classic Apple 12-bar Activity Indicator inside the Glass Orb */
+    .ios-activity {
+      position: relative;
+      width: 38px;
+      height: 38px;
+    }
+
+
+    .ios-activity span {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 3.4px;
+      height: 10px;
+      margin-left: -1.7px;
+      margin-top: -19px;
+      border-radius: 4px;
+      background: var(--text-primary);
+      transform-origin: 50% 19px;
+      animation: iosTickFade 1.08s linear infinite;
+    }
+
+
+    .ios-activity span:nth-child(1)  { transform: rotate(0deg);   animation-delay: -0.99s; }
+    .ios-activity span:nth-child(2)  { transform: rotate(30deg);  animation-delay: -0.90s; }
+    .ios-activity span:nth-child(3)  { transform: rotate(60deg);  animation-delay: -0.81s; }
+    .ios-activity span:nth-child(4)  { transform: rotate(90deg);  animation-delay: -0.72s; }
+    .ios-activity span:nth-child(5)  { transform: rotate(120deg); animation-delay: -0.63s; }
+    .ios-activity span:nth-child(6)  { transform: rotate(150deg); animation-delay: -0.54s; }
+    .ios-activity span:nth-child(7)  { transform: rotate(180deg); animation-delay: -0.45s; }
+    .ios-activity span:nth-child(8)  { transform: rotate(210deg); animation-delay: -0.36s; }
+    .ios-activity span:nth-child(9)  { transform: rotate(240deg); animation-delay: -0.27s; }
+    .ios-activity span:nth-child(10) { transform: rotate(270deg); animation-delay: -0.18s; }
+    .ios-activity span:nth-child(11) { transform: rotate(300deg); animation-delay: -0.09s; }
+    .ios-activity span:nth-child(12) { transform: rotate(330deg); animation-delay: 0s; }
+
+
+    @keyframes spinLinear {
+      to { transform: rotate(360deg); }
+    }
+
+
+    @keyframes iosTickFade {
+      0% { opacity: 1; }
+      100% { opacity: 0.16; }
+    }
+
+
+    .status-box {
+      width: 100%;
+      max-width: 390px;
+      min-height: 112px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 14px;
+    }
+
+
+    .status-text {
+      font-size: clamp(18px, 4.9vw, 21px);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      line-height: 1.38;
+      overflow-wrap: break-word;
+      word-break: break-word;
+      transition: opacity 0.28s ease, transform 0.34s var(--spring);
+    }
+
+
+    .status-text.changing {
+      opacity: 0;
+      transform: translateY(7px);
+    }
+
+
+    /* File Counter Pill (Phase 4) */
+    .file-counter-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 9px 16px;
+      border-radius: var(--radius-pill);
+      background: var(--glass-bg-strong);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06), var(--glass-inset);
+      font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13.5px;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      color: var(--text-secondary);
+      opacity: 0;
+      transform: translateY(8px) scale(0.95);
+      pointer-events: none;
+      transition: opacity 0.35s ease, transform 0.4s var(--spring);
+    }
+
+
+    .file-counter-pill.show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+
+    .file-counter-pill strong {
+      color: var(--text-primary);
+      font-weight: 700;
+    }
+
+
+    .live-pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-green);
+      box-shadow: 0 0 0 0 var(--accent-green-glow);
+      animation: pulseDot 1.6s ease-out infinite;
+    }
+
+
+    @keyframes pulseDot {
+      0% { box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.65); }
+      70% { box-shadow: 0 0 0 8px rgba(52, 199, 89, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(52, 199, 89, 0); }
+    }
+
+
+    /* Bottom Progress Bar (ONLY during update process) */
+    .progress-dock {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 20;
+      padding: 14px 18px calc(20px + env(safe-area-inset-bottom));
+      display: none;
+      justify-content: center;
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.4s ease, transform 0.45s var(--spring);
+    }
+
+
+    .progress-dock.active {
+      display: flex;
+    }
+
+
+    .progress-dock.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+
+    .progress-container {
+      width: 100%;
+      max-width: 448px;
+      padding: 13px 16px 15px;
+      border-radius: 22px;
+      background: var(--glass-bg-strong);
+      backdrop-filter: blur(28px) saturate(185%);
+      -webkit-backdrop-filter: blur(28px) saturate(185%);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow), var(--glass-inset);
+    }
+
+
+    .progress-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 9px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+
+    .progress-percent {
+      font-variant-numeric: tabular-nums;
+      color: var(--accent-green);
+      font-weight: 700;
+    }
+
+
+    .progress-track {
+      width: 100%;
+      height: 10px;
+      border-radius: var(--radius-pill);
+      background: var(--track-bg);
+      overflow: hidden;
+      position: relative;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.12);
+    }
+
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      border-radius: var(--radius-pill);
+      background: linear-gradient(90deg, #28bd4f 0%, var(--accent-green) 55%, #4ae371 100%);
+      box-shadow: 0 0 14px var(--accent-green-glow);
+      position: relative;
+      will-change: width;
+    }
+
+
+    .progress-fill::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.42) 50%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      transform: translateX(-100%);
+      animation: shimmer 2s ease-in-out infinite;
+    }
+
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(180%); }
+    }
+
+
+    /* ==================== SCREEN 3: FINAL ==================== */
+    #screen-final {
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px 4px;
+    }
+
+
+    .final-card {
+      width: 100%;
+      padding: 32px 22px 28px;
+      border-radius: var(--radius-xl);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+
+    .final-icon-wrap {
+      position: relative;
+      width: 88px;
+      height: 88px;
+      margin-bottom: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+
+    .final-icon-glow {
+      position: absolute;
+      inset: -10px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(52, 199, 89, 0.36) 0%, rgba(0, 122, 255, 0.14) 55%, transparent 75%);
+      animation: breatheGlow 3.2s ease-in-out infinite;
+    }
+
+
+    @keyframes breatheGlow {
+      0%, 100% { transform: scale(0.95); opacity: 0.72; }
+      50% { transform: scale(1.1); opacity: 1; }
+    }
+
+
+    .final-icon-badge {
+      position: relative;
+      width: 82px;
+      height: 82px;
+      border-radius: 26px;
+      background: linear-gradient(145deg, #34d363 0%, #24b34b 58%, #16943a 100%);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow:
+        0 14px 30px rgba(52, 199, 89, 0.35),
+        inset 0 1.5px 2px rgba(255, 255, 255, 0.52);
+    }
+
+
+    .final-icon-badge svg {
+      animation: gentleRotate 9s ease-in-out infinite;
+    }
+
+
+    @keyframes gentleRotate {
+      0%, 100% { transform: rotate(0deg); }
+      45% { transform: rotate(180deg); }
+      55% { transform: rotate(180deg); }
+      95% { transform: rotate(360deg); }
+    }
+
+
+    .final-title {
+      font-size: clamp(25px, 6.5vw, 29px);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: var(--text-primary);
+    }
+
+
+    .final-subtitle {
+      margin-top: 6px;
+      font-size: 16.5px;
+      font-weight: 600;
+      color: var(--accent-green);
+    }
+
+
+    .final-desc {
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: var(--radius-md);
+      background: var(--glass-border-subtle);
+      border: 1px solid var(--divider);
+      font-size: 14.5px;
+      line-height: 1.56;
+      color: var(--text-secondary);
+    }
+
+
+    .final-version-tag {
+      margin-top: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 14px;
+      border-radius: var(--radius-pill);
+      background: var(--glass-bg-strong);
+      border: 1px solid var(--glass-border);
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-tertiary);
+    }
+
+
+    @media (max-width: 360px) {
+      .app-shell {
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+      .meta-row {
+        font-size: 13px;
+      }
+      .feature-item, .warning-row {
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+
+  <!-- Ambient Liquid Background -->
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+
+  <main class="app-shell">
+
+
+    <!-- ==================== OBRAZOVKA 1: ÚVOD ==================== -->
+    <section id="screen-intro" class="screen active visible" aria-labelledby="intro-title">
+      <header class="hero-header">
+        <div class="app-squircle" aria-hidden="true">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2.5L4.5 5.6V11.3C4.5 16.25 7.72 20.78 12 22C16.28 20.78 19.5 16.25 19.5 11.3V5.6L12 2.5Z" stroke="white" stroke-width="1.8" stroke-linejoin="round" fill="rgba(255,255,255,0.14)"/>
+            <path d="M9.2 12.2L11.1 14.1L15.2 9.8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+
+        <div class="phase-pill">
+          <span class="phase-dot"></span>
+          <span>Fáze 1 z 6</span>
+        </div>
+
+
+        <h1 id="intro-title" class="main-title">New Technology Software - CS Updater</h1>
+        <p class="main-subtitle">Je dostupná aktualizace</p>
+      </header>
+
+
+      <!-- Doporučení -->
+      <div class="recommend-banner" role="note">
+        <div class="banner-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M12 3L5 6V11.5C5 15.9 8 19.9 12 21C16 19.9 19 15.9 19 11.5V6L12 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M12 8V12.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="12" cy="15.8" r="1" fill="currentColor"/>
+          </svg>
+        </div>
+        <p>Doporučujeme aktualizovat CyberSecure co nejdříve, abyste zůstali chráněni</p>
+      </div>
+
+
+      <!-- Základní údaje -->
+      <div class="glass-card meta-card">
+        <div class="meta-row">
+          <div class="meta-left">
+            <span class="meta-icon" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="4.5" width="18" height="16.5" rx="3" stroke="currentColor" stroke-width="1.9"/>
+                <path d="M8 2.5V6M16 2.5V6M3 9.5H21" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <span>Spuštěno:</span>
+          </div>
+          <span class="meta-value">24.11.2026</span>
+        </div>
+
+
+        <div class="meta-row">
+          <div class="meta-left">
+            <span class="meta-icon" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+                <path d="M12 3V14.5M12 14.5L7.5 10M12 14.5L16.5 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M4 16.5V18C4 19.66 5.34 21 7 21H17C18.66 21 20 19.66 20 18V16.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <span>Velikost:</span>
+          </div>
+          <span class="meta-value">253 MB</span>
+        </div>
+
+
+        <div class="meta-row">
+          <div class="meta-left">
+            <span class="meta-icon" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.9"/>
+                <path d="M12 7.5V12L15 13.8" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span>Odhadovaný čas aktualizace:</span>
+          </div>
+          <span class="meta-value">3 minuty</span>
+        </div>
+      </div>
+
+
+      <!-- Popis aktualizace -->
+      <div class="glass-card details-card">
+        <div class="section-label">Popis:</div>
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="feature-badge" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12.5L9.5 17L19 7.5" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span>Aktualizace bezpečnostního jádra CS.</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-badge" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12.5L9.5 17L19 7.5" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span>Obsahuje nové bezpečnostní funkce SMS swamp.</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-badge" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12.5L9.5 17L19 7.5" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span>Verze aplikace bude po restartu povýšena na verzi 15.0</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-badge" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12.5L9.5 17L19 7.5" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span>Aktualizace bezpečnostního jádra na úroveň zabezpečení 9</span>
+          </li>
+        </ul>
+      </div>
+
+
+      <!-- Důležitá upozornění -->
+      <div class="warning-card" role="alert">
+        <div class="warning-row">
+          <span class="warning-icon" aria-hidden="true">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="9.5" stroke="currentColor" stroke-width="2"/>
+              <path d="M12 7.5V12.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="12" cy="16.2" r="1.1" fill="currentColor"/>
+            </svg>
+          </span>
+          <span>Funkce ochrany bude dočasně pozastavena, obnoví se po restartu zařízení</span>
+        </div>
+
+
+        <div class="warning-row">
+          <span class="warning-icon" aria-hidden="true">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+              <path d="M12 3.5L21 19.5H3L12 3.5Z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/>
+              <path d="M12 9.5V13.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="12" cy="16.8" r="1" fill="currentColor"/>
+            </svg>
+          </span>
+          <span>Po dokončení aktualizace bude vyžadován restart zařízení, během kterého nelze zařízení použít ani pro tísňové volání</span>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ==================== OBRAZOVKA 2: PRŮBĚH AKTUALIZACE ==================== -->
+    <section id="screen-updating" class="screen" aria-live="polite">
+      <div class="mini-topbar">
+        <span class="mini-icon" aria-hidden="true">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+            <path d="M12 3L5 6V11.5C5 15.9 8 19.9 12 21C16 19.9 19 15.9 19 11.5V6L12 3Z" stroke="white" stroke-width="2.2" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span>New Technology Software - CS Updater</span>
+      </div>
+
+
+      <div class="update-center">
+        <div class="spinner-stage" role="status" aria-label="Probíhá aktualizace">
+          <div class="spinner-halo"></div>
+          <div class="spinner-ring-track">
+            <div class="spinner-arc"></div>
+            <div class="ios-activity">
+              <span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="status-box">
+          <p id="status-text" class="status-text">Zpracování aktualizačního balíčku...</p>
+          <div id="file-counter-pill" class="file-counter-pill">
+            <span class="live-pulse"></span>
+            <span>Zpracování: <strong id="file-count">0</strong> z 289 souborů</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ==================== OBRAZOVKA 3: FINÁLNÍ ==================== -->
+    <section id="screen-final" class="screen" aria-labelledby="final-title">
+      <div class="glass-card final-card">
+        <div class="final-icon-wrap" aria-hidden="true">
+          <div class="final-icon-glow"></div>
+          <div class="final-icon-badge">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+              <path d="M20 12A8 8 0 0 1 6.34 17.66M4 12A8 8 0 0 1 17.66 6.34" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+              <path d="M18 3.5V7H14.5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M6 20.5V17H9.5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+
+        <h1 id="final-title" class="final-title">Skoro hotovo!</h1>
+        <p class="final-subtitle">Už jen restartujte zařízení</p>
+
+
+        <p class="final-desc">
+          Aktualizace jsou nainstalované, ale aby se použily, restartujte prosím telefon.
+          Po restartu otevřete aplikaci CyberSecure, aby se dokončila aktualizace.
+        </p>
+
+
+        <div class="final-version-tag">
+          <span class="live-pulse"></span>
+          <span>CyberSecure v15.0 • Úroveň zabezpečení 9</span>
+        </div>
+      </div>
+    </section>
+
+
+  </main>
+
+
+  <!-- Tlačítko "Spustit nyní" (jen na úvodní obrazovce) -->
+  <div id="action-dock" class="action-dock">
+    <button id="btn-start" type="button" class="btn-primary">
+      <span>Spustit nyní</span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+
+
+  <!-- Zelený průběhový pruh (pouze po dobu aktualizace) -->
+  <div id="progress-dock" class="progress-dock" aria-hidden="true">
+    <div class="progress-container">
+      <div class="progress-meta">
+        <span>Průběh aktualizace</span>
+        <span id="progress-percent" class="progress-percent">0 %</span>
+      </div>
+      <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div id="progress-fill" class="progress-fill"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    (function () {
+      'use strict';
+
+
+      // Přesné časy jednotlivých fází (v milisekundách)
+      // Celkem: 34 + 15 + 11 + 130 + 13 = 203 sekund (3 minuty 23 sekund)
+      const PHASES = [
+        {
+          duration: 34 * 1000,
+          text: 'Zpracování aktualizačního balíčku...',
+          showFiles: false
+        },
+        {
+          duration: 15 * 1000,
+          text: 'Příprava na aktualizaci...',
+          showFiles: false
+        },
+        {
+          duration: 11 * 1000,
+          text: 'Vyčkejte prosím, aktualizační proces ukončuje služby CS-executable-kernel...',
+          showFiles: false
+        },
+        {
+          duration: 130 * 1000, // 2 minuty 10 sekund
+          text: 'Aktualizační proces provádí aktualizaci...',
+          showFiles: true
+        },
+        {
+          duration: 13 * 1000,
+          text: 'Hned to bude...',
+          showFiles: false
+        }
+      ];
+
+
+      const TOTAL_FILES = 289;
+      const TOTAL_DURATION = PHASES.reduce((acc, p) => acc + p.duration, 0);
+
+
+      // Předpočítání časových hranic každé fáze
+      let accTime = 0;
+      const PHASE_BOUNDS = PHASES.map((phase) => {
+        const start = accTime;
+        const end = accTime + phase.duration;
+        accTime = end;
+        return { ...phase, start, end };
+      });
+
+
+      // DOM prvky
+      const screenIntro = document.getElementById('screen-intro');
+      const screenUpdating = document.getElementById('screen-updating');
+      const screenFinal = document.getElementById('screen-final');
+
+
+      const actionDock = document.getElementById('action-dock');
+      const btnStart = document.getElementById('btn-start');
+
+
+      const statusTextEl = document.getElementById('status-text');
+      const fileCounterPill = document.getElementById('file-counter-pill');
+      const fileCountEl = document.getElementById('file-count');
+
+
+      const progressDock = document.getElementById('progress-dock');
+      const progressFill = document.getElementById('progress-fill');
+      const progressPercentEl = document.getElementById('progress-percent');
+      const progressTrack = progressDock.querySelector('.progress-track');
+
+
+      let isRunning = false;
+      let startTimestamp = 0;
+      let currentPhaseIndex = -1;
+      let displayedFileCount = 0;
+      let fileTimestamps = [];
+      let rafId = null;
+      let wakeLockSentinel = null;
+
+
+      /**
+       * Vygeneruje časový rozvrh pro kroky 1..289 tak, aby:
+       * 1) celý blok trval přesně 129,1 s (zbylých 0,9 s je vidět 289 z 289 před přechodem),
+       * 2) intervaly byly přirozeně nepravidelné (rychlé dávky, normální tempo i několikasekundové záseky),
+       * 3) každý krok trval alespoň 35 ms (čísla se vizuálně nepřeskakují).
+       */
+      function generateOrganicFileSchedule(totalSteps, activeDurationMs) {
+        const MIN_STEP_MS = 35;
+        const variableBudget = activeDurationMs - totalSteps * MIN_STEP_MS;
+        const weights = new Array(totalSteps);
+
+
+        // Generování přirozených "režimů" rychlosti (rychlé dávky, plynulé, pomalejší)
+        let i = 0;
+        while (i < totalSteps) {
+          const r = Math.random();
+          let mode, chunkLen;
+
+
+          if (r < 0.52) {
+            mode = 'burst';
+            chunkLen = 7 + Math.floor(Math.random() * 18); // 7–24 rychlých souborů
+          } else if (r < 0.84) {
+            mode = 'steady';
+            chunkLen = 4 + Math.floor(Math.random() * 11); // 4–14 středních souborů
+          } else {
+            mode = 'slow';
+            chunkLen = 2 + Math.floor(Math.random() * 4);  // 2–5 pomalejších souborů
+          }
+
+
+          for (let k = 0; k < chunkLen && i < totalSteps; k++, i++) {
+            if (mode === 'burst') {
+              weights[i] = 0.04 + Math.random() * 0.16;
+            } else if (mode === 'steady') {
+              weights[i] = 0.28 + Math.random() * 0.65;
+            } else {
+              weights[i] = 1.0 + Math.random() * 1.6;
+            }
+          }
+        }
+
+
+        // Vložení 8 až 11 realistických vícevteřinových pauz (těžší soubory / ověřování)
+        const stallCount = 8 + Math.floor(Math.random() * 4);
+        const stallIndices = [];
+        let attempts = 0;
+
+
+        while (stallIndices.length < stallCount && attempts < 200) {
+          attempts++;
+          const candidate = 10 + Math.floor(Math.random() * (totalSteps - 22));
+          const tooClose = stallIndices.some((idx) => Math.abs(idx - candidate) < 9);
+          if (!tooClose) {
+            stallIndices.push(candidate);
+            weights[candidate] = 6.5 + Math.random() * 7.5; // po normalizaci cca 2,8–6,5 s pauza
+          }
+        }
+
+
+        // Normalizace vah přesně na požadovaný časový rozpočet
+        const totalWeight = weights.reduce((sum, w) => sum + w, 0);
+        const cumulative = new Array(totalSteps);
+        let runningMs = 0;
+
+
+        for (let step = 0; step < totalSteps; step++) {
+          const stepDuration = MIN_STEP_MS + (weights[step] / totalWeight) * variableBudget;
+          runningMs += stepDuration;
+          cumulative[step] = runningMs;
+        }
+
+
+        return cumulative;
+      }
+
+
+      // Pokus o udržení rozsvíceného displeje na mobilech během aktualizace
+      async function requestWakeLock() {
+        try {
+          if ('wakeLock' in navigator) {
+            wakeLockSentinel = await navigator.wakeLock.request('screen');
+          }
+        } catch (_) {
+          // Prohlížeč Wake Lock nepovolil nebo nepodporuje – nevadí
+        }
+      }
+
+
+      function releaseWakeLock() {
+        try {
+          if (wakeLockSentinel) {
+            wakeLockSentinel.release();
+            wakeLockSentinel = null;
+          }
+        } catch (_) {}
+      }
+
+
+      // Plynulá změna textu stavu
+      function setStatusText(newText) {
+        statusTextEl.classList.add('changing');
+        window.setTimeout(() => {
+          statusTextEl.textContent = newText;
+          statusTextEl.classList.remove('changing');
+        }, 220);
+      }
+
+
+      // Přepnutí obrazovek
+      function switchScreen(fromEl, toEl, onShown) {
+        fromEl.classList.remove('visible');
+        window.setTimeout(() => {
+          fromEl.classList.remove('active');
+          toEl.classList.add('active');
+          window.scrollTo({ top: 0, behavior: 'instant' });
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              toEl.classList.add('visible');
+              if (typeof onShown === 'function') onShown();
+            });
+          });
+        }, 320);
+      }
+
+
+      // Zobrazení / skrytí spodní zelené lišty
+      function showProgressDock() {
+        progressDock.classList.add('active');
+        progressDock.setAttribute('aria-hidden', 'false');
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            progressDock.classList.add('visible');
+          });
+        });
+      }
+
+
+      function hideProgressDock() {
+        progressDock.classList.remove('visible');
+        progressDock.setAttribute('aria-hidden', 'true');
+        window.setTimeout(() => {
+          progressDock.classList.remove('active');
+        }, 420);
+      }
+
+
+      // Hlavní smyčka řízená reálným časem (odolná proti nepřesnostem setTimeout)
+      function tick() {
+        if (!isRunning) return;
+
+
+        const now = Date.now();
+        const elapsed = Math.max(0, now - startTimestamp);
+        const clampedElapsed = Math.min(elapsed, TOTAL_DURATION);
+
+
+        // 1) Plynulá aktualizace zeleného progress baru (0 % -> 100 %)
+        const ratio = clampedElapsed / TOTAL_DURATION;
+        const percentExact = ratio * 100;
+        const percentDisplay = Math.min(100, Math.floor(percentExact));
+
+
+        progressFill.style.width = percentExact.toFixed(3) + '%';
+        progressPercentEl.textContent = percentDisplay + ' %';
+        progressTrack.setAttribute('aria-valuenow', String(percentDisplay));
+
+
+        // 2) Kontrola dokončení celého procesu
+        if (elapsed >= TOTAL_DURATION) {
+          finishUpdate();
+          return;
+        }
+
+
+        // 3) Určení aktuální fáze
+        let phaseIdx = PHASE_BOUNDS.findIndex((p) => elapsed >= p.start && elapsed < p.end);
+        if (phaseIdx === -1) phaseIdx = PHASE_BOUNDS.length - 1;
+
+
+        if (phaseIdx !== currentPhaseIndex) {
+          currentPhaseIndex = phaseIdx;
+          const phase = PHASE_BOUNDS[phaseIdx];
+
+
+          if (phaseIdx === 0) {
+            statusTextEl.textContent = phase.text;
+          } else {
+            setStatusText(phase.text);
+          }
+
+
+          if (phase.showFiles) {
+            displayedFileCount = 0;
+            fileCountEl.textContent = '0';
+            fileCounterPill.classList.add('show');
+          } else {
+            fileCounterPill.classList.remove('show');
+          }
+        }
+
+
+        // 4) Fáze 4: Organické přičítání souborů +1 od 0 do 289
+        const activePhase = PHASE_BOUNDS[currentPhaseIndex];
+        if (activePhase && activePhase.showFiles) {
+          const phaseElapsed = elapsed - activePhase.start;
+
+
+          // Najdeme cílový počet souborů podle předpočítaných časových značek
+          let targetCount = displayedFileCount;
+          while (
+            targetCount < TOTAL_FILES &&
+            fileTimestamps[targetCount] <= phaseElapsed
+          ) {
+            targetCount++;
+          }
+
+
+          // Přičítáme vždy po +1, aby uživatel viděl plynulý postup bez přeskočení
+          if (displayedFileCount < targetCount) {
+            displayedFileCount += 1;
+            fileCountEl.textContent = String(displayedFileCount);
+          }
+        }
+
+
+        rafId = requestAnimationFrame(tick);
+      }
+
+
+      function startUpdate() {
+        if (isRunning) return;
+        isRunning = true;
+
+
+        // Příprava organického rozvrhu pro 289 souborů (129 100 ms aktivně + 900 ms zobrazení 289/289)
+        fileTimestamps = generateOrganicFileSchedule(TOTAL_FILES, 129100);
+        currentPhaseIndex = -1;
+        displayedFileCount = 0;
+
+
+        actionDock.classList.add('hidden');
+        requestWakeLock();
+
+
+        switchScreen(screenIntro, screenUpdating, () => {
+          startTimestamp = Date.now();
+          showProgressDock();
+          rafId = requestAnimationFrame(tick);
+        });
+      }
+
+
+      function finishUpdate() {
+        isRunning = false;
+        if (rafId) {
+          cancelAnimationFrame(rafId);
+          rafId = null;
+        }
+
+
+        progressFill.style.width = '100%';
+        progressPercentEl.textContent = '100 %';
+        progressTrack.setAttribute('aria-valuenow', '100');
+
+
+        releaseWakeLock();
+        hideProgressDock();
+        switchScreen(screenUpdating, screenFinal);
+      }
+
+
+      // Obnovení Wake Locku při návratu do aktivního okna
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible' && isRunning) {
+          requestWakeLock();
+        }
+      });
+
+
+      btnStart.addEventListener('click', startUpdate);
+    })();
+  </script>
+</body>
+</html>
